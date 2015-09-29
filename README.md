@@ -1,9 +1,8 @@
-# bigdata-learn
-大数据学习笔记
+# 学习笔记 #
 
+## 大数据 ##
 * hadoop
-	- yarn
-* hbase
-* hive
-* spark
-* storm
+	* [yarn](https://github.com/NotBadPad/learn-note/blob/master/bigdata/hadoop/yarn/yarn.md)
+
+
+## java ##
