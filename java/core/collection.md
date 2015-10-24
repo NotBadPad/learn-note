@@ -1,3 +1,8 @@
+_（本文部分图片引用自其他博客，最后有链接，侵删。另今天先完成一部分占坑，明天补全）_ 
+### 集合结构 ###
+![](https://raw.githubusercontent.com/NotBadPad/learn-note/master/java/core/java-collection.png)  
+红字为java.util包下的，绿字为concurrent包下扩展的与并发相关的类
+
 ### List ###
 ##### ArrayList #####
 功能：有序非线程安全列表  
@@ -79,7 +84,7 @@
 功能：线程安全的HashMap，属于java.util.concurrent下的拓展类  
 要点：  
 * 线程安全
-* 底层实现是一个Segment<K, V>数组，Segment内部通过一个HashEntry<K, V>数组存储元素数据，同时Segment继承了ReentrantLock，直接通过本身的锁对改段数据操作同步
+* 底层实现是一个Segment<K, V>数组，Segment内部通过一个HashEntry<K, V>数组存储元素数据，同时Segment继承了[ReentrantLock](http://hyxw5890.iteye.com/blog/1578597)，直接通过本身的锁对改段数据操作同步
 * 从底层结构可以发现，其修改时不会对整个集合加锁，而是对段加锁，因此允许同时修改多个段，效率更高
 * 继承NavigableMap,主要实现了SortMap，因此是有序的
 * Segment的划分是通过key的hashCode计算
@@ -123,7 +128,65 @@
 * 需要注意的是底层实现是通过CopyOnWriteArrayList，而非HashMap
 * 使用场景与CopyOnWriteArrayList一样  
 
+### Queue ###  
+Queue实现了队列操作，是基本集合的一个扩充，特点是提供了队列操作offer、poll和peek，主要分为两类，一类只支持单端操作，常见的如PriorityQueue，另一类为双端队列，可实现堆栈操作，均实现Deque。需注意的是队列也提供了add和remove，但应避免使用。 
 
+##### PriorityQueue #####  
+功能：如其名，优先级队列，可根据Comparator实现优先级排列  
+要点：   
+* 非线程安全  
+* 底层为一个Object数组
+* 不提供Comparator时按照元素自然顺序  
+
+##### ArrayDeque #####  
+功能：如其名，优先级队列，可根据Comparator实现优先级排列  
+要点：   
+* 非线程安全  
+* 底层为一个E[]数组，同时提供head和tail记录存储数据的首位位置
+* 由于使用数组不是链表，速度比LinkedList更快  
+
+##### LinkedBlockingDeque #####  
+功能：阻塞队列，支持支持FIFO和FILO  
+要点：   
+* 线程安全  
+* 底层为一个链表，通过一个ReentrantLock锁控制并发
+* 可指定容量，实现阻塞，队满时插入阻塞，队空时读取阻塞，不指定则取最大整数
+* 注意take在空时不阻塞直接返回失败，而poll则会阻塞
+* 可指定元素超时时间
+
+##### LinkedBlockingQueue #####  
+功能：阻塞队列，和LinkedBlockingDeque基本一样，不过支持队列操作  
+
+##### PriorityBlockingQueue #####  
+功能：优先级阻塞队列，直接看名字，不解释了  
+
+##### SynchronousQueue #####  
+功能：阻塞队列，特殊之处在于其不存储元素，一个元素入队之后必须出队，否则阻塞，可以理解为1个元素的阻塞队列 
+
+##### LinkedTransferQueue #####  
+功能：LinkedBlockingQueue和SynchronousQueue的结合体，特点是如果一个元素入队过程中发现又出队请求，则直接返回，不会再插入链表中 
+要点：  
+* 注意其并发并非通过ReentrantLock，而是通过[LockSupport](http://my.oschina.net/readjava/blog/282882)工具类实现
+
+##### DelayQueue #####  
+功能：延迟队列，只有达到指定时间的元素才能出队  
+要点：  
+* 底层实现是一个PriorityQueue，通过ReentrantLock控制并发
+* 可以理解为一个以入队时间-延迟时间为优先级的队列  
+
+### 一些使用上的浅见 ###  
+* 从上边的总结可以看出来java对于集合的实现非常完善，几乎所有场景都有对应的类。因此我们应该避免重复造轮子，在合适的场景下使用合适的集合不仅省力，而且更可靠
+* 能简则不繁，其实多数情况下我们使用基本的几个类就够了，复杂的实现一般用于底层框架_(如JDK以及一些常用框架中就用到了不少并发的实现，但其场景都十分鲜明)_。如果平时写也想上层逻辑时使用了负责的集合类，往往我们需要认真考虑下真的有没有必要，或者这部分是不是可以抽象为一个通用的组件，这算是个很有用的代码架构技巧吧。
+* 无论怎么用，理解至上。几个基本类之所以用的顺手是因为我们熟悉其特性，而对于复杂的集合类一定要理解其特性，否则很容易踩坑。集合部分算是JDK中最容易理解的代码了，花一会儿时间而保证优质代码还是很值的。
+
+### 备注 ###
+一些参考博客 _(都是很优秀的博客，若个人看源码吃力，可以参考着这些博客来看)_  
 http://cmsblogs.com/?cat=5
 http://my.oschina.net/lifany/blog/191294
-http://blog.csdn.net/guangcigeyun/article/details/8278349
+http://blog.csdn.net/guangcigeyun/article/details/8278349  
+http://www.cnblogs.com/skywang12345/p/3503480.html
+http://www.infoq.com/cn/articles/java-blocking-queue/
+http://my.oschina.net/readjava/blog/282882
+http://hyxw5890.iteye.com/blog/1578597
+
+_以上xmind图源文件以及该系列相关文件都将同步至[github](https://github.com/NotBadPad/learn-note/tree/master/java)，敬请关注_
