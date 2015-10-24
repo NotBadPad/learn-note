@@ -25,7 +25,7 @@
 功能：基于Vector实现的堆栈  
 要点：  
 * 线程安全
-* 后进先出（LIFO）
+* 后进先出（LIFO）1
 
 ##### CopyOnWriteArrayList #####
 功能：快照版本的ArrayList，修改操作通过复制一份数组操作  
@@ -39,7 +39,7 @@
 * 使用synchronized：对List操作是进行同步，需要自己控制
 * 使用Vector：效率低，已经较少使用了
 * 使用CopyOnWriteArrayList，前边已经介绍了，这个只能在量小读多写少的场景下用，且性能很差，一般不要用
-* 使用Collections.synchronizedList()：工具类提供的一个比较简便的方法，可以直接创建一个线程安全的list，建议使用。其原理是对ArrayList进行包装，通过一个对象锁来控制并发，需要注意的是要弄清楚对象锁锁的是哪个对象。
+* 使用Collections.synchronizedList()：工具类提供的一个比较简便的方法，可以直接创建一个线程安全的list，建议使用。其原理是对ArrayList进行包装，通过一个对象锁来控制并发，需要注意的是要弄清楚对象锁锁的是哪个对象。 
 
 ### Map ###
 ##### HashMap #####
