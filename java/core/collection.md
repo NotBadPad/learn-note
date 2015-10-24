@@ -35,11 +35,10 @@
 * 修改操作通过ReentrantLock同步
 * 迭代器只能访问，不能修改，且不会因为遍历过程中修改而抛异常
 
-##### 实现线程安全List的方法 #####
-
+##### 实现线程安全List的方法 #####  
 * 使用synchronized：对List操作是进行同步，需要自己控制
 * 使用Vector：效率低，已经较少使用了
-* 使用CopyOnWriteArrayList，前边已经介绍了，这个只能在读多写少的场景下用，且性能很差，一般不要用
+* 使用CopyOnWriteArrayList，前边已经介绍了，这个只能在量小读多写少的场景下用，且性能很差，一般不要用
 * 使用Collections.synchronizedList()：工具类提供的一个比较简便的方法，可以直接创建一个线程安全的list，建议使用。其原理是对ArrayList进行包装，通过一个对象锁来控制并发，需要注意的是要弄清楚对象锁锁的是哪个对象。
 
 ### Map ###
@@ -66,7 +65,7 @@
 * 当发生冲突时，新元素会插入到链首
 * 每次table容量变化时，需要重新rehash
 * 键值不能为空  
-![](http://cmsblogs.com/wp-content/uploads/2014/04/1_thumb.png)
+![](https://camo.githubusercontent.com/d3a88df46affd6adc7d37925a4ed99cee128da16/687474703a2f2f636d73626c6f67732e636f6d2f77702d636f6e74656e742f75706c6f6164732f323031342f30342f315f7468756d622e706e67)
 
 ##### TreeMap #####
 功能：基于[红黑树](http://www.cnblogs.com/yangecnu/p/Introduce-Red-Black-Tree.html)实现的有序集合 
@@ -90,11 +89,41 @@
 要点：  
 * 线程安全
 * 底层实现是一个多层链表，每层元素都有序，每低一层都包含上一层的元素，最底层包含所有元素。这样设计的巧妙之处是从上层逐层查找时，能够快速定位元素区间。思想上有点像折半查找，不过是把每次折半的中间值分层存了起来。同时链表结构是修改操作同样高效
+* key是有序的
 * 空间换时间，效率很高，但是空间占用也很厉害  
-![](http://img.my.csdn.net/uploads/201211/30/1354281084_2228.png)
+![](https://camo.githubusercontent.com/260a8e552f3790ade3c9f69c178658082ee3b6f6/687474703a2f2f696d672e6d792e6373646e2e6e65742f75706c6f6164732f3230313231312f33302f313335343238313038345f323232382e706e67)
 
+##### Map的用法 #####  
+* 非线程安全情景基本上都用HashMap
+* 有序用TreeMap
+* 线程安全优先ConcurrentHashMap
+* ConcurrentHashMap和ConcurrentSkipListMap的优劣主要在于并发量，并发量不高时前者效率高，并发量很大时可以考虑后者
 
 ### Set ###
+##### HashSet #####
+功能： 就是一个value均为同一个PRESENT对象的HashMap
+要点：   
+* 非线程安全  
+* 底层为一个HashMap，其所有元素value值是一个Object类型的静态常量
+* 其他参考HashMap  
+
+##### TreeSet #####
+功能： 同TreeMap
+要点：   
+* 非线程安全  
+* 底层为一个TreeMap，其所有元素value值是一个Object类型的静态常量
+* 其他参考TreeMap  
+
+##### ConcurrentSkipListSet #####
+功能： 同ConcurrentSkipListMap  
+
+##### CopyOnWriteArraySet #####
+功能： 同ConcurrentSkipListMap   
+要点：  
+* 需要注意的是底层实现是通过CopyOnWriteArrayList，而非HashMap
+* 使用场景与CopyOnWriteArrayList一样  
 
 
-
+http://cmsblogs.com/?cat=5
+http://my.oschina.net/lifany/blog/191294
+http://blog.csdn.net/guangcigeyun/article/details/8278349
