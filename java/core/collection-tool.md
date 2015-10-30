@@ -7,7 +7,7 @@ java.utils下又两个集合相关_(准确来说其中一个是数组的)_的工
 
 下边直接用两个图来说明_(其中三言两语说不清的会标红，并在后边打上标记，在图后有对应说明)_：
 #### Arrays ####
-![]()  
+![](https://raw.githubusercontent.com/NotBadPad/learn-note/master/java/core/java-collection-tool-arrays.png)  
 
 ##### sort中的多种排序算法 #####  
 印象中JDK很多地方都是快排和归并，这里也不例外，不过这里用的都是优化的算法，并且根据排序元素类型策略不同：  
@@ -16,10 +16,7 @@ java.utils下又两个集合相关_(准确来说其中一个是数组的)_的工
 	* 双基准快速排，改进的多路快排算法  
 * [ComparableTimSort](http://blog.csdn.net/bruce_6/article/details/38299199)  
 	* 默认引用类型均用此排序，JDK7中新增
-	9 cz  
-	';]
-
-	p* 基于TimSort，该算法是优化版本的归并排序，dyr	 混合使用了归并和插入排序  
+	* 基于TimSort，该算法是优化版本的归并排序，混合使用了归并和插入排序  
 * [LegacyMergeSort](http://www.cnblogs.com/kkun/archive/2011/11/23/2260271.html)  
 	* 老版本中的排序算法，JDK7中为兼容仍保留，若想使用可通过-Djava.util.Arrays.useLegacyMergeSort=true
 	* 优化的归并排序，但是性能较TimSort差  
@@ -34,38 +31,37 @@ List list = Arrays.asList(arr);
 还要注意的一个点是asList返回了一个ArrayList对象，这个对象并不是我们常用的java.utils下的那个，而是Arrays的一个内部类，它是只读的，因此我们要想获得一个不残疾的list，要这样写：   
 ```java  
 List list = new ArrayListArrays.asList(1,2,3); 
-```
+```  
+
+##### hashCode #####  
+这个倒没啥好说的，这里直接贴代码吧，主要看下集合的hashCode是怎么计算的。  
+```java  
+    public static int hashCode(Object[] var0) {
+        if(var0 == null) {
+            return 0;
+        } else {
+            int var1 = 1;
+            Object[] var2 = var0;
+            int var3 = var0.length;
+            for(int var4 = 0; var4 < var3; ++var4) {
+                Object var5 = var2[var4];
+                var1 = 31 * var1 + (var5 == null?0:var5.hashCode());
+            }
+            return var1;
+        }
+    }
+```  
+
+##### deepXXX #####  
+就如同拷贝分为深拷贝和浅拷贝一样，由于集合可能是多层的，集合内的元素可能还是一个集合，因此对于集合的很多操作默认是只处理一层，如hashCode、equals、toString，这样对于多层的处理就不是我们期望的结果了。因此Arrays还提供了deepXXX的方法，其会递归的逐层处理。  
 
 #### Collections ####  
-![]()  
+![](https://raw.githubusercontent.com/NotBadPad/learn-note/master/java/core/java-collection-tool-collections.png)  
 
+##### unmodifiableXXXX、synchronizedXXX、checkedXXXX ##### 
+这三个方法功能各不相同，unmodifiableXXXX返回一个不可修改的副本，synchronizedXXX范围一个线程安全的副本，checkedXXXX返回的副本会对添加操作进行类型检查(这里说副本并不准确，其实操作的还是原对象)，这里之所以要放在一起说，因为他们有很多共同之处：  
+* 均使用包装模式实现，将传入对象作为私有属性，然后通过对其操作进行包装实现对应功能
+* 操作的都是原对象，原对象的修改也会体现在包装的对象上
+* 都支持list、set、map  
 
-arrays
-sort
-数值类型  双基准快速排——DualPivotQuicksort
-对象类型 
-	老的用归并排序——LegacyMergeSort  若长度小于等于INSERTIONSORT_THRESHOLD，则直接插入排序
-	新的用优化的归并排序——ComparableTimSort
-
-collections
-sort 
-底层调用 arrays
-
-asList
-返回list不可修改
-
-hashCode
-值的计算
-
-deepXXX
-逐层取值
-
-unmodifiableXXXX
-镜像
-
-synchronizedXXX
-包装模式
-
-checkedXXXX
-http://m.blog.csdn.net/blog/chang_harry/8759757
-http://my.oschina.net/huhaonan/blog/262990
+_(原图和相关xmind文件见:[github](https://github.com/NotBadPad/learn-note/tree/master/java/core))_
