@@ -16,15 +16,27 @@ java.utils下又两个集合相关_(准确来说其中一个是数组的)_的工
 	* 双基准快速排，改进的多路快排算法  
 * [ComparableTimSort](http://blog.csdn.net/bruce_6/article/details/38299199)  
 	* 默认引用类型均用此排序，JDK7中新增
-	* 基于TimSort，该算法是优化版本的归并排序，混合使用了归并和插入排序  
+	9 cz  
+	';]
+
+	p* 基于TimSort，该算法是优化版本的归并排序，dyr	 混合使用了归并和插入排序  
 * [LegacyMergeSort](http://www.cnblogs.com/kkun/archive/2011/11/23/2260271.html)  
 	* 老版本中的排序算法，JDK7中为兼容仍保留，若想使用可通过-Djava.util.Arrays.useLegacyMergeSort=true
 	* 优化的归并排序，但是性能较TimSort差  
 
 ##### asList需注意的点 #####  
-asList是我们经常使用的一个方法，可以将一组值直接转成
+asList是我们经常使用的一个方法，可以将一组值直接转成list，但是看下如下代码：  
+```java  
+int[] arr = new int[3]{1,2,3};
+List list = Arrays.asList(arr); 
+```
+相信大部分同学初看起来没什么问题吧(反正我一直没觉得有问题)，把数组转成list，然后结果打印list，你会发现其中只有一个元素，这个元素就是arr指向的数组。**所以该方法并不能把数组转为list，list的构造函数本身就支持数组，没必要在提供方法**  
+还要注意的一个点是asList返回了一个ArrayList对象，这个对象并不是我们常用的java.utils下的那个，而是Arrays的一个内部类，它是只读的，因此我们要想获得一个不残疾的list，要这样写：   
+```java  
+List list = new ArrayListArrays.asList(1,2,3); 
+```
 
-#### Arrays ####  
+#### Collections ####  
 ![]()  
 
 
