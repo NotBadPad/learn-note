@@ -19,3 +19,6 @@ http://blog.csdn.net/xuefeng1009/article/details/6955707
 
 ## ByteArrayInputStream  
 http://blog.csdn.net/rcoder/article/details/6118313 
+
+## RandomAccessFile
+http://blog.csdn.net/akon_vm/article/details/7429245 
