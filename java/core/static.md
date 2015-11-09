@@ -11,7 +11,7 @@
 只能调用其他static
 只能访问static数据
 不能访问this和super
-
+。
 
 ###静态块###
 
