@@ -3,3 +3,7 @@
 周三  设计模式，hbase、luence
 周四  算法
 周五  redis、memcache、回顾
+
+
+设计模式
+工厂  单例  装饰  代理  观察者
