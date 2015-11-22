@@ -1,9 +1,9 @@
 ### 概述 ###
 并发处理本身就是编程开发重点之一，同时内容也很繁杂，从底层指令处理到上层应用开发都要涉及，也是最容易出问题的地方。这块知识也是评价一个开发人员水平的重要指标，本人自认为现在也只是学其皮毛，因此本文重点介绍java的并发相关体系，具体的点懂得就多讲，不懂得就给出参考文章。先来看图：
-![]()  
+![](https://raw.githubusercontent.com/NotBadPad/learn-note/master/java/core/java-concurrent.png)  
 本文重点介绍jdk中concurrent的内容，并发相关基础不在介绍，如果想系统的学习，建议直接看并发大作《java并发编程实践》吧(之前看过，可惜很多地方没懂)，博客终究只是快餐，增强学习拓展知识很好，但打基础还是要看书实战的。  
 ### java内存模型 ###
-直接盗图一张，详细讲解参考[博客](http://www.infoq.com/cn/articles/java-memory-model-1)。  
+直接盗图一张（图寝删），详细讲解参考[博客](http://www.infoq.com/cn/articles/java-memory-model-1)。  
 ![](http://img.my.csdn.net/uploads/201302/06/1360141335_1299.png)  
 java内存模型的作用可以理解为抽象了线程私有内存与主存（共享内存或堆）的关系，也就是原子性、可见性、顺序性的原则，而后介绍的内容都是为了保证这些原则的实现手段。  
 
