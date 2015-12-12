@@ -6,7 +6,7 @@
 * 一个快速拷贝数组的方法：arraycopy()
 * 一些jvm操作，如gc()、runFinalization()、exit()，该部分并未在源码的java doc中提到，可能因为本身不建议主动调用吧。而且这几个方法都仅仅是Runtime.getRuntime()的调用，两者没有区别  
 下边直接看图，主要的方法和功能都已经列出来。  
-![](https://raw.githubusercontent.com/NotBadPad/learn-note/master/java/core/java-collection.png) 
+![](https://raw.githubusercontent.com/NotBadPad/learn-note/master/java/other/system.png) 
 下边我们重点来该类是如何初始化的。
 首先在开头我们就可以看如下代码：
 ```java
@@ -56,3 +56,4 @@ private static void initializeSystemClass() {
     }
 ```
 至此，System基本上便讲完了，不过还有很多底层的东西没看懂(setJavaLangAccess())，留待以后解决吧。
+_(个人学习总结原markdown文件和xmind文件见[github](https://github.com/NotBadPad/learn-note))_

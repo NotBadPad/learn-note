@@ -6,6 +6,7 @@ _(所有整理主要使用xmind，对应目录下均有文件和图片。对于�
 	* [集合工具类](https://github.com/NotBadPad/learn-note/blob/master/java/core/collection-tool.md)
 	* [io](https://github.com/NotBadPad/learn-note/blob/master/java/core/io.md)
 	* [并发](https://github.com/NotBadPad/learn-note/blob/master/java/core/java-concurrent.md)  
+	* [其他](https://github.com/NotBadPad/learn-note/blob/master/java/other/system.md)
 * netty
 	* [基础整理](https://raw.githubusercontent.com/NotBadPad/learn-note/master/java/netty/netty.png)
 
