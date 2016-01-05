@@ -139,10 +139,10 @@ Queue实现了队列操作，是基本集合的一个扩充，特点是提供了
 * 不提供Comparator时按照元素自然顺序  
 
 ##### ArrayDeque #####  
-功能：如其名，优先级队列，可根据Comparator实现优先级排列  
+功能：双端队列，可根据Comparator实现优先级排列  
 要点：   
 * 非线程安全  
-* 底层为一个E[]数组，同时提供head和tail记录存储数据的首位位置
+* 底层为一个E[]数组，实现环表，同时提供head和tail记录存储数据的首位位置
 * 由于使用数组不是链表，速度比LinkedList更快  
 
 ##### LinkedBlockingDeque #####  
